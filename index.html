@@ -69,23 +69,26 @@ body{
 	border-left: solid 2px #ffffff;
 	}
 	
-.headerbutton{
+.headerbutton1{
 	width:100%; 
 	height:80px;
 	background: #333333;
 	border:none;
-	font-size:20pt;
+	font-size:5vw;
+	text-align:center;
+	color:#ffffff;
+	}
+.headerbutton2{
+	width:100%; 
+	height:80px;
+	background: #333333;
+	border:none;
+	font-size:20vw;
 	text-align:center;
 	color:#ffffff;
 	}
 
-.period{
-	width:10%; 
-	font-size:5vw;
-  	background: #333333;
-	color:#ffffff;
-	text-align:center;
-	}
+
 .info{
 	width:90%; 
 	font-size:3.6vw;
@@ -125,21 +128,20 @@ body{
 </tr>
 <tr>
 <td class="buttoncell">
-<button class="headerbutton" onclick="clicked(this);">トレンド</button>
+<button class="headerbutton1" onclick="clicked(this);">トレンド</button>
 </td>
 <td class="buttoncellc">
-<button class="headerbutton" onclick="clickedback();">政治/経済</button>
+<button class="headerbutton1" onclick="clickedback();">政治/経済</button>
 </td>
 <td class="buttoncellc">
-<button class="headerbutton" onclick="clickedback();">エンタメ</button>
+<button class="headerbutton1" onclick="clickedback();">エンタメ</button>
 </td>
 <td class="buttoncell">
-<button class="headerbutton" onclick="clicked(this);">スポーツ</button>
+<button class="headerbutton1" onclick="clicked(this);">スポーツ</button>
 </td>
 </tr>
 </table>
 </header>
-
 <br>
 <div class="subtitle">トレンド</div>
 <table align="center" border="1" style="border-collapse: collapse" class="maintable">
