@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>SelectClass</title>
+<script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+<script type="text/javascript">
+   
+// 表の動的作成
+function makeTable(){
+	var data = [["11HR","12HR"],["13HR","14HR"],["15HR","16HR"],["17HR","18HR"]];
+	tableId="table";
+    	// 表の作成開始
+    	var rows=[]; var table = document.createElement("table");
+    	// 表に2次元配列の要素を格納
+    	for(i = 0; i < data.length; i++){
+        	rows.push(table.insertRow(-1));  // 行の追加
+        	for(j = 0; j < data[i].length; j++){
+           		cell=rows[i].insertCell(-1);
+	    		cell2=document.createElement("button"); 
+	    		cell2.setAttribute("value", data[i][j]); 
+            		cell2.appendChild(document.createTextNode(data[i][j]));
+	    		cell2.setAttribute("onclick", "send(this)");
+	    		cell2.setAttribute("class", "buttoncss");
+	    		cell.setAttribute("class", "buttoncell");
+	    		cell.appendChild(cell2) 
+        	};
+	var mydata = sessionStorage.getItem("User");
+	var ele = document.getElementsByTagName("output")[0];
+	alert(mydata);
+	ele.innerHTML = mydata;
+	
+	};
+    document.getElementById(tableId).appendChild(table);
+}
+
+var session = new QiSession();
+function toTabletHandler(jsonlist) {
+	console.log("PepperQiMessaging/totabletイベント発生: " + value);
+	objlist = JSON.parse(jsonlist);
+	prevgrade = objlist['prev'];
+	currentgrade = objlist['current'];
+	nextgrade = objlist['next'];
+	data = objlist['class'];	
+}
+
+function startSubscribe() {
+	session.service("ALMemory").done(function (ALMemory) {
+		console.log("ALMemory取得成功");
+		ALMemory.subscriber("SelectClass").done(function(subscriber) {
+    			subscriber.signal.connect(toTabletHandler);
+    		});
+  	});
+}
+
+function clicked(p) {
+	var grade = p.value;
+        session.service("ALMemory").done(function (ALMemory) {
+        	console.log("ALMemory取得成功");
+        	ALMemory.raiseEvent("celectedclass", grade);
+        });
+}
+
+function clickedback() {
+        session.service("ALMemory").done(function (ALMemory) {
+        	console.log("ALMemory取得成功");
+        	ALMemory.raiseEvent("back", null);
+        });
+}
+
+
+
+</script>
+<style>
+body{
+	width:1280px;
+	height: 800px;
+	background: #ffffff;
+	margin: 0px;
+   	padding: 0px;
+	}
+
+	
+button.buttoncss{
+	font-size:60pt;
+	width:640px; 
+	height: 150px;
+	font-family:'Century Gothic';
+	text-align:center;
+	background: -webkit-linear-gradient(#bb72ff 0%, #e900ff 100%);
+	color:#ffffff;
+	border-radius: 20px;
+	}
+
+.headerstyle {
+	width:1280px; 
+	height:160px;
+	table-layout: fixed;
+	background: #333333;
+	border="0";
+	}
+
+.header{
+	color:#6795fd;
+	width:1280px; 
+	height:80px;
+  	background: #333333;
+	position: relative;  
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	}
+
+.headertext{
+	color: #ACB6E5;
+  	background: -webkit-linear-gradient(#bb72ff 0%, #ed2dff 100%);
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+ 	display: block;
+	font-size:40pt;
+	font-family: 'Montserrat';
+	text-align:center;
+	font-weight: bold;
+	}
+
+.buttoncell{
+	width:320px; 
+	height:80px;
+	text-align:center;
+	border-top: hidden;
+	border-bottom: hidden;
+	}
+.buttoncellc{
+	width:320px; 
+	height:80px;
+	text-align:center;
+	border-top: hidden;
+	border-bottom: hidden;
+	border-right: solid 2px #ffffff;
+	border-left: solid 2px #ffffff;
+	}
+	
+.headerbutton{
+	width:316px; 
+	height:80px;
+	background: #333333;
+	border:none;
+	}
+.buttonbox{
+	width:156px; 
+	height:80px;
+	font-size:30pt;
+	text-align:left;
+	color:#ffffff;
+	}
+.buttonbox2{
+	width:156px; 
+	height:80px;
+	font-size:30pt;
+	text-align:right;
+	color:#ffffff;
+	}
+.imgbox{
+	width:156px; 
+	height:80px;
+	}
+.minitable{
+	border:0px;
+	width:316px; 
+	height:80px;
+}
+.gradient{
+  	background: -webkit-linear-gradient(#bb72ff 0%, #ed2dff 100%);
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+	}
+
+
+</style>
+</head>
+<body onload="makeTable();startSubscribe()">
+<header>
+<table class='headerstyle' border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="header"><span class="headertext">授業サーチ</span></td>
+</tr>
+<tr>
+<td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
+<table class="minitable" border="0"><tr><td class="imgbox"><img src="searchleft.png"></img></td>
+<td class="buttonbox" id="prevgrade">1年部</td></tr></table></button></td>
+<td class="buttoncellc"><button class="headerbutton" onclick="clickedback();">
+<table class="minitable" border="0"><tr><td class="imgbox">
+<img src="searchback.png"　class="ima"></img></td>
+<td class="buttonbox">戻る</td></tr></table></button></td>
+<td class="buttoncellc"><table class="minitable" border="0"><tr>
+<td class="imgbox"><img src="searchflag.png"></img></td>
+<td class="buttonbox" id="currentgrade">
+<span class="gradient">2年部</span></td></tr></table></button></td>
+<td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
+<table class="minitable" border="0"><tr><td class="buttonbox2" id="nextgrade">3年部</td>
+<td class="imgbox"><img src="searchright.png"></img></td></tr></table></button></td>
+</tr>
+</table>
+</header>
+<output></output>
+<br>
+<table id="table"></table>
+<span id = "apple"></span>
+<span id = "orange"></span>
+</body>
+</html>                                                             
