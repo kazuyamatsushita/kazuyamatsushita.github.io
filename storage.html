@@ -4,177 +4,45 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex,nofollow">
 <title>SelectClass</title>
-<script type="text/javascript">
-   
-// 表の動的作成
 
-
-function Session(){
-	var user = document.getElementById("user");
-	var title = document.getElementById("title");
-	var content = document.getElementById("content");
-	var post = [user.value,title.value,content.value];
-	try{
-		var jsondatabase = sessionStorage.getItem("3736data");
-		var database = JSON.parse(jsondatabase);
-		var num = Object.keys(database).length;
-		database[num] = post;
-		jsondatabase = JSON.stringify(database);
-		alert("二回目以降");
-		alert(jsondatabase);
-	}catch(e){
-		var info = ["管理人","はじめまして","自由に書き込んでください"];
-		var database = {"0":info,"1":post};
-		jsondatabase = JSON.stringify(database);
-		alert("初回");
-		alert(jsondatabase);
-	}
-	sessionStorage.setItem("3736data",jsondatabase);
-}
-
-
-
-</script>
 <style>
-body{
-	width:1280px;
-	height: 800px;
-	background: #ffffff;
-	margin: 0px;
-   	padding: 0px;
+.explanation{
+	width:70%;
+	background: #dddddd;
+	margin: 0 auto;
+	font-size : 24px;
 	}
-
-	
-button.buttoncss{
-	font-size:60pt;
-	width:640px; 
-	height: 150px;
-	font-family:'Century Gothic';
-	text-align:center;
-	background: -webkit-linear-gradient(#bb72ff 0%, #e900ff 100%);
-	color:#ffffff;
-	border-radius: 20px;
-	}
-
-.headerstyle {
-	width:1280px; 
-	height:160px;
-	table-layout: fixed;
-	background: #333333;
-	border="0";
-	}
-
-.header{
-	color:#6795fd;
-	width:1280px; 
-	height:80px;
-  	background: #333333;
-	position: relative;  
-	display: flex;
-  	justify-content: center;
-  	align-items: center;
-	}
-
-.headertext{
-	color: #ACB6E5;
-  	background: -webkit-linear-gradient(#bb72ff 0%, #ed2dff 100%);
-  	-webkit-background-clip: text;
-  	-webkit-text-fill-color: transparent;
- 	display: block;
-	font-size:40pt;
-	font-family: 'Montserrat';
-	text-align:center;
-	font-weight: bold;
-	}
-
-.buttoncell{
-	width:320px; 
-	height:80px;
-	text-align:center;
-	border-top: hidden;
-	border-bottom: hidden;
-	}
-.buttoncellc{
-	width:320px; 
-	height:80px;
-	text-align:center;
-	border-top: hidden;
-	border-bottom: hidden;
-	border-right: solid 2px #ffffff;
-	border-left: solid 2px #ffffff;
-	}
-	
-.headerbutton{
-	width:316px; 
-	height:80px;
-	background: #333333;
-	border:none;
-	}
-.buttonbox{
-	width:156px; 
-	height:80px;
-	font-size:30pt;
-	text-align:left;
-	color:#ffffff;
-	}
-.buttonbox2{
-	width:156px; 
-	height:80px;
-	font-size:30pt;
-	text-align:right;
-	color:#ffffff;
-	}
-.imgbox{
-	width:156px; 
-	height:80px;
-	}
-.minitable{
-	border:0px;
-	width:316px; 
-	height:80px;
-}
-.gradient{
-  	background: -webkit-linear-gradient(#bb72ff 0%, #ed2dff 100%);
-  	-webkit-background-clip: text;
-  	-webkit-text-fill-color: transparent;
-	}
-
 
 </style>
 </head>
-<body onload="makeTable()">
-<header>
-<table class='headerstyle' border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="header"><span class="headertext">授業サーチ</span></td>
-</tr>
-<tr>
-<td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
-<table class="minitable" border="0"><tr><td class="imgbox"><img src="searchleft.png"></img></td>
-<td class="buttonbox" id="prevgrade">1年部</td></tr></table></button></td>
-<td class="buttoncellc"><button class="headerbutton" onclick="clickedback();">
-<table class="minitable" border="0"><tr><td class="imgbox">
-<img src="searchback.png"　class="ima"></img></td>
-<td class="buttonbox">戻る</td></tr></table></button></td>
-<td class="buttoncellc"><table class="minitable" border="0"><tr>
-<td class="imgbox"><img src="searchflag.png"></img></td>
-<td class="buttonbox" id="currentgrade">
-<span class="gradient">2年部</span></td></tr></table></button></td>
-<td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
-<>
-<table class="minitable" border="0"><tr><td class="buttonbox2" id="nextgrade">3年部</td>
-<td class="imgbox"><img src="searchright.png"></img></td></tr></table></button></td>
-</tr>
-</table>
-</header>
+<body>
 <a href="storage2.html">遷移</a>
 <br>
-<form>
-	<p>ユーザー名<input type="text" id="user"></p>
-	<p>タイトル<input type="text" id="title"></p>
-	<p>内容<input type="text" id="content"></p>
-	<p><input type="button" value="確認する" id="button2" onclick="Session()"></p>
-</form>
+<div class="explanation">
+<ul>
+<li>授業内での開発のため機能を制限しています。
+<ul>
+<li>*の表記がある説明は機能を制限した部分です。</li>
+</ul></li>
+<li>ブラウザは<font color="#ff0000">GoogleChrome</font>をお使いください。</li>
+<ul>
+<li>InternetExploreをお使いの方は以下の手順でページを開いてください。
+<li>GoogleChromeを起動します。</li>
+<li>「」をコビーしてアドレスバー(ページ上部の検索ボックス)に貼り付けます。</li>
+<li>エンターキーを押します。</li>
+</ul></li>
+<li>「Write」ページで投稿を作成できます。
+<ul>
+<li>ユーザー名、タイトル、内容を書きます。</li>
+<li>「投稿」ボタンを押すと投稿が完了できます。</li>
+<li>*投稿はブラウザを閉じた時に削除されます</li>
+</ul></li>
+<li>「Read」ページで投稿を閲覧できます。
+<ul>
+<li>*投稿は自分のもののみ表示されます。</li>
+</ul></li>
+</ul>
+</div>
 <table id="table"></table>
 <span id = "apple"></span>
 <span id = "orange"></span>
