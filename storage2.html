@@ -2,74 +2,55 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex,nofollow">
 <title>SelectClass</title>
-<script src="/libs/qimessaging/1.0/qimessaging.js"></script>
 <script type="text/javascript">
    
 // 表の動的作成
+
+
+function session(){
+	var user = document.getElementById("user");
+	var title = document.getElementById("title");
+	var content = document.getElementById("content");
+	var post = [user.value,title.value,content.value];
+	try{
+		var jsondatabase = sessionStorage.getItem("3736data");
+		var database = JSON.parse(jsondatabase);
+		var num = Object.keys(database).length;
+		database[num] = post;
+		jsondatabase = JSON.stringify(database);
+
+	}catch(e){
+		var info = ["管理人","はじめまして","自由に書き込んでください"];
+		var database = {"0":info,"1":post};
+		jsondatabase = JSON.stringify(database);
+
+	}
+	sessionStorage.setItem("3736data",jsondatabase);
+}
+</script>
+<script>
 function makeTable(){
-	var data = [["11HR","12HR"],["13HR","14HR"],["15HR","16HR"],["17HR","18HR"]];
-	tableId="table";
-    	// 表の作成開始
-    	var rows=[]; var table = document.createElement("table");
-    	// 表に2次元配列の要素を格納
-    	for(i = 0; i < data.length; i++){
-        	rows.push(table.insertRow(-1));  // 行の追加
-        	for(j = 0; j < data[i].length; j++){
-           		cell=rows[i].insertCell(-1);
-	    		cell2=document.createElement("button"); 
-	    		cell2.setAttribute("value", data[i][j]); 
-            		cell2.appendChild(document.createTextNode(data[i][j]));
-	    		cell2.setAttribute("onclick", "send(this)");
-	    		cell2.setAttribute("class", "buttoncss");
-	    		cell.setAttribute("class", "buttoncell");
-	    		cell.appendChild(cell2) 
-        	};
-	var mydata = sessionStorage.getItem("User");
-	var ele = document.getElementsByTagName("output")[0];
-	alert(mydata);
-	ele.innerHTML = mydata;
-	
-	};
-    document.getElementById(tableId).appendChild(table);
+	var database = sessionStorage.getItem("3736data");
+	postnum = sessionStorage.getItem("3736postnum");
+	var jsondatabase = JSON.parse(database);
+
+	var table1 = document.createElement('table');
+      	// tr部分のループ
+      	for (var i = 0; i < Object.keys(jsondatabase[postnum][3]).length; i++) {
+        	var tr2top = document.createElement('tr');
+        	var td2top = document.createElement('td');
+        	var tr2content = document.createElement('tr');
+        	var td2content = document.createElement('td');
+        	td2top.textContent = jsondatabase[postnum][3][String(i)][0]+" "+jsondatabase[postnum][3][String(i)][1];
+		td2content.textContent = jsondatabase[postnum][3][String(i)][2];
+        	tr2top.appendChild(td2top);
+        	tr2content.appendChild(td2content);
+        	table1.appendChild(tr2top);
+        	table1.appendChild(tr2content);
+	}
+	document.getElementById('table').appendChild(table1);
 }
-
-var session = new QiSession();
-function toTabletHandler(jsonlist) {
-	console.log("PepperQiMessaging/totabletイベント発生: " + value);
-	objlist = JSON.parse(jsonlist);
-	prevgrade = objlist['prev'];
-	currentgrade = objlist['current'];
-	nextgrade = objlist['next'];
-	data = objlist['class'];	
-}
-
-function startSubscribe() {
-	session.service("ALMemory").done(function (ALMemory) {
-		console.log("ALMemory取得成功");
-		ALMemory.subscriber("SelectClass").done(function(subscriber) {
-    			subscriber.signal.connect(toTabletHandler);
-    		});
-  	});
-}
-
-function clicked(p) {
-	var grade = p.value;
-        session.service("ALMemory").done(function (ALMemory) {
-        	console.log("ALMemory取得成功");
-        	ALMemory.raiseEvent("celectedclass", grade);
-        });
-}
-
-function clickedback() {
-        session.service("ALMemory").done(function (ALMemory) {
-        	console.log("ALMemory取得成功");
-        	ALMemory.raiseEvent("back", null);
-        });
-}
-
-
 
 </script>
 <style>
@@ -179,7 +160,7 @@ button.buttoncss{
 
 </style>
 </head>
-<body onload="makeTable();startSubscribe()">
+<body onload="makeTable()">
 <header>
 <table class='headerstyle' border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -198,15 +179,21 @@ button.buttoncss{
 <td class="buttonbox" id="currentgrade">
 <span class="gradient">2年部</span></td></tr></table></button></td>
 <td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
+<>
 <table class="minitable" border="0"><tr><td class="buttonbox2" id="nextgrade">3年部</td>
 <td class="imgbox"><img src="searchright.png"></img></td></tr></table></button></td>
 </tr>
 </table>
 </header>
-<output></output>
+
 <br>
+
+<form>
+	<p>ユーザー名<input type="text" id="user"></p>
+	<p>タイトル<input type="text" id="title"></p>
+	<p>内容<input type="text" id="content"></p>
+	<p><input type="button" value="確認する" id="button2" onclick="Session()"></p>
+</form>
 <table id="table"></table>
-<span id = "apple"></span>
-<span id = "orange"></span>
 </body>
-</html>                                                             
+</html>              
