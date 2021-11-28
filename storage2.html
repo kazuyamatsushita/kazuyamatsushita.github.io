@@ -12,44 +12,69 @@ function session(){
 	var user = document.getElementById("user");
 	var title = document.getElementById("title");
 	var content = document.getElementById("content");
-	var post = [user.value,title.value,content.value];
-	try{
-		var jsondatabase = sessionStorage.getItem("3736data");
-		var database = JSON.parse(jsondatabase);
-		var num = Object.keys(database).length;
-		database[num] = post;
-		jsondatabase = JSON.stringify(database);
-
-	}catch(e){
-		var info = ["管理人","はじめまして","自由に書き込んでください"];
-		var database = {"0":info,"1":post};
-		jsondatabase = JSON.stringify(database);
-
-	}
-	sessionStorage.setItem("3736data",jsondatabase);
+	var post = [user.value,content.value];
+	var database = sessionStorage.getItem("3736data");
+	var jsondatabase = JSON.parse(database);
+	var postnum = sessionStorage.getItem("3736postnum");
+	var num = Object.keys(jsondatabase[postnum][3]).length;
+	jsondatabase[postnum][3][num] = post;
+	database = JSON.stringify(jsondatabase);
+	sessionStorage.setItem("3736data",database);
+	alert(database);
+	makeTable();
 }
 </script>
 <script>
 function makeTable(){
 	var database = sessionStorage.getItem("3736data");
-	postnum = sessionStorage.getItem("3736postnum");
 	var jsondatabase = JSON.parse(database);
-
-	var table1 = document.createElement('table');
-      	// tr部分のループ
+	var postnum = String(sessionStorage.getItem("3736postnum"));
+	table1 = document.createElement('table');
+	tr1top = document.createElement('tr');
+        td1top = document.createElement('td');
+        tr1content = document.createElement('tr');
+        td1content = document.createElement('td');
+	var text0 = jsondatabase[postnum][0] + " " + jsondatabase[postnum][1]
+        td1top.textContent = text0;
+	td1content.textContent = jsondatabase[postnum][2];
+	td1top.setAttribute('class',"tdtop");
+	td1content.setAttribute('class',"tdcontent");
+	tr1top.appendChild(td1top);
+        tr1content.appendChild(td1content);
+        table1.appendChild(tr1top);
+        table1.appendChild(tr1content);
+	document.getElementById('table1').appendChild(table1);
+	try{
+		let parent = document.getElementById('table2');
+		let child = document.getElementById('child');
+		parent.removeChild(child);
+	}catch(e){
+	};
+	table2 = document.createElement('table');
+	tr2head = document.createElement('tr');
+       	td2head = document.createElement('td');
+	td2head.textContent = "Reply";
+	td2head.setAttribute('class',"tdhead");
+	tr2head.appendChild(td2head);
+	table2.appendChild(tr2head);
       	for (var i = 0; i < Object.keys(jsondatabase[postnum][3]).length; i++) {
-        	var tr2top = document.createElement('tr');
-        	var td2top = document.createElement('td');
-        	var tr2content = document.createElement('tr');
-        	var td2content = document.createElement('td');
-        	td2top.textContent = jsondatabase[postnum][3][String(i)][0]+" "+jsondatabase[postnum][3][String(i)][1];
-		td2content.textContent = jsondatabase[postnum][3][String(i)][2];
+        	tr2top = document.createElement('tr');
+        	td2top = document.createElement('td');
+        	tr2content = document.createElement('tr');
+        	td2content = document.createElement('td');
+        	td2top.textContent = jsondatabase[postnum][3][String(i)][0];
+		td2content.textContent = jsondatabase[postnum][3][String(i)][1];
+		td2top.setAttribute('class',"tdtop");
+		td2content.setAttribute('class',"tdcontent");
         	tr2top.appendChild(td2top);
         	tr2content.appendChild(td2content);
-        	table1.appendChild(tr2top);
-        	table1.appendChild(tr2content);
+        	table2.appendChild(tr2top);
+        	table2.appendChild(tr2content);
 	}
-	document.getElementById('table').appendChild(table1);
+	table2.setAttribute('id','child');
+	document.getElementById('table2').appendChild(table2);
+
+	
 }
 
 </script>
@@ -161,39 +186,15 @@ button.buttoncss{
 </style>
 </head>
 <body onload="makeTable()">
-<header>
-<table class='headerstyle' border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td class="header"><span class="headertext">授業サーチ</span></td>
-</tr>
-<tr>
-<td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
-<table class="minitable" border="0"><tr><td class="imgbox"><img src="searchleft.png"></img></td>
-<td class="buttonbox" id="prevgrade">1年部</td></tr></table></button></td>
-<td class="buttoncellc"><button class="headerbutton" onclick="clickedback();">
-<table class="minitable" border="0"><tr><td class="imgbox">
-<img src="searchback.png"　class="ima"></img></td>
-<td class="buttonbox">戻る</td></tr></table></button></td>
-<td class="buttoncellc"><table class="minitable" border="0"><tr>
-<td class="imgbox"><img src="searchflag.png"></img></td>
-<td class="buttonbox" id="currentgrade">
-<span class="gradient">2年部</span></td></tr></table></button></td>
-<td class="buttoncell"><button class="headerbutton" onclick="clicked(this);">
-<>
-<table class="minitable" border="0"><tr><td class="buttonbox2" id="nextgrade">3年部</td>
-<td class="imgbox"><img src="searchright.png"></img></td></tr></table></button></td>
-</tr>
-</table>
-</header>
+
 
 <br>
-
+<div id="table1"></div>
 <form>
 	<p>ユーザー名<input type="text" id="user"></p>
-	<p>タイトル<input type="text" id="title"></p>
 	<p>内容<input type="text" id="content"></p>
-	<p><input type="button" value="確認する" id="button2" onclick="Session()"></p>
+	<p><input type="button" value="確認する" id="button2" onclick="session()"></p>
 </form>
-<table id="table"></table>
+<div id="table2"></div>
 </body>
 </html>              

@@ -13,15 +13,16 @@
 <title>News遠州</title>
 <script type="text/javascript">
 
-function Session0(){
-	var info = ["管理人","はじめまして","自由に書き込んでください",{"0":["a","a","a"],"1":["b","b","b"]}];
-	var database = {"0":info};
+function session(){
+	var info = ["管理人","はじめまして","自由に書き込んでください",{"0":["a","a"],"1":["b","b"]}];
+	database = {"0":info};
 	jsondatabase = JSON.stringify(database);
 	sessionStorage.setItem("3736data",jsondatabase);
 }
 
 
 function send(num){
+	alert(JSON.stringify(jsondatabase));
 	alert(num);
 	sessionStorage.setItem("3736postnum",num);
 
@@ -241,7 +242,7 @@ body{
 </style>
 
 </head>
-<body onload="Session0()">
+<body onload="session()">
 <header>
 <table class='headerstyle' border="0" cellspacing="0" cellpadding="0">
 <tr>
