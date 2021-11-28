@@ -21,11 +21,11 @@ function session(){
 	database = JSON.stringify(jsondatabase);
 	sessionStorage.setItem("3736data",database);
 	alert(database);
-	makeTable();
+	makeTable2();
 }
 </script>
 <script>
-function makeTable(){
+function makeTable1(){
 	var database = sessionStorage.getItem("3736data");
 	var jsondatabase = JSON.parse(database);
 	var postnum = String(sessionStorage.getItem("3736postnum"));
@@ -44,6 +44,12 @@ function makeTable(){
         table1.appendChild(tr1top);
         table1.appendChild(tr1content);
 	document.getElementById('table1').appendChild(table1);
+}
+
+function makeTable2(){
+	var database = sessionStorage.getItem("3736data");
+	var jsondatabase = JSON.parse(database);
+	var postnum = String(sessionStorage.getItem("3736postnum"));
 	try{
 		let parent = document.getElementById('table2');
 		let child = document.getElementById('child');
@@ -73,8 +79,6 @@ function makeTable(){
 	}
 	table2.setAttribute('id','child');
 	document.getElementById('table2').appendChild(table2);
-
-	
 }
 
 </script>
@@ -185,7 +189,7 @@ button.buttoncss{
 
 </style>
 </head>
-<body onload="makeTable()">
+<body onload="makeTable1();makeTable2()">
 
 
 <br>
